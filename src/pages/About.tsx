@@ -21,17 +21,15 @@ export default function About() {
             The Foundation
           </h2>
           <p>
-            For years, my day-to-day involved measuring angles, cutting timber, and ensuring every
-            load-bearing structure was mathematically sound. Woodworking taught me that a flaw in
-            the foundation eventually compromises the entire build—no matter how nice the paint
-            looks on the outside.
+            For years, my day-to-day revolved around measuring angles, crafting furniture, and
+            obsessing over the fine details. Carpentry taught me a fundamental truth: a flaw in the
+            foundation will eventually compromise the entire build, no matter how good the paint looks on the outside.
           </p>
           <p>
-            When I transitioned into quantitative finance and data science, I realized the rules
-            hadn’t changed—only the materials. Instead of framing walls, I now architect data
-            pipelines and predictive models. It still requires precision, reliable tooling, and a
-            deep respect for the raw materials. I don’t just want scripts that run; I want
-            infrastructure that lasts.
+            Now, as a third-semester data science student, I’ve realized the rules haven't changed,
+            only the materials. Instead of shaping wood, I architect data pipelines. The work still
+            demands precision, reliable tooling, and a deep respect for the raw materials. My goal
+            isn't just to write scripts that run; it's to engineer infrastructure that lasts.
           </p>
         </div>
       </section>
