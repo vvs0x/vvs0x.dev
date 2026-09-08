@@ -1,0 +1,99 @@
+.article {
+  --block-gap: clamp(2.5rem, 6vw, 4rem);
+
+  padding: clamp(2rem, 5vw, 4rem) var(--gutter) 6rem;
+}
+
+.header,
+.body,
+.links {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+/* ----- Header ----- */
+
+.category,
+.date {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.category {
+  margin-bottom: 1rem;
+  letter-spacing: 0.03em;
+}
+
+.category::before {
+  content: '// ';
+}
+
+.title {
+  margin-bottom: 1rem;
+  font-size: clamp(2rem, 1rem + 3.5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.date {
+  letter-spacing: 0.05em;
+}
+
+/* ----- Image ----- */
+
+.figure {
+  max-width: 56rem;
+  margin: var(--block-gap) auto 0;
+  border: 1px solid var(--color-border);
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+}
+
+/* ----- Body ----- */
+
+.body {
+  margin-top: var(--block-gap);
+}
+
+.body p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.body p + p {
+  margin-top: 1.5rem;
+}
+
+/* ----- Links ----- */
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.links a {
+  display: inline-block;
+  padding-block: 0.25rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  transition: color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .links a:hover {
+    color: var(--color-text-muted);
+  }
+}

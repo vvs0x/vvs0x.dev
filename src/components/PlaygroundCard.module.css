@@ -1,0 +1,17 @@
+.thought {
+  justify-content: center;
+}
+
+.headline {
+  margin-bottom: 1rem;
+  font-size: clamp(1.5rem, 1rem + 1.5vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.excerpt {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}

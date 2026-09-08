@@ -1,0 +1,148 @@
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--nav-padding-block) var(--gutter);
+  /* Page top is a snap position on pages that opt into scroll snap. */
+  scroll-snap-align: start;
+}
+
+/* Desktop: the menu is simply the bar's content, links left, icons right. */
+.menu {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* ----- Main navigation ----- */
+
+.nav {
+  display: flex;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--nav-item-size);
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+}
+
+/* ----- Contact icons ----- */
+
+.contact {
+  --icon-size: 1.2rem;
+  --icon-box: var(--nav-item-size);
+
+  display: flex;
+  align-items: center;
+  /* Pull the row in so the glyphs, not the tap boxes, align with the text edge. */
+  margin-inline: calc((var(--icon-size) - var(--icon-box)) / 2);
+}
+
+.iconLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--icon-box, var(--nav-item-size));
+  min-height: var(--icon-box, var(--nav-item-size));
+  /* Explicit inset so the glyph stays put even when the CV label widens the box. */
+  padding-inline: calc((var(--icon-box, var(--nav-item-size)) - var(--icon-size, 1.2rem)) / 2);
+  font-size: var(--icon-size, 1.2rem);
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.iconLink:focus-visible {
+  color: var(--color-text);
+  border-radius: 4px;
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .iconLink:hover {
+    color: var(--color-text);
+  }
+}
+
+/* Declared after .iconLink so that it wins on desktop. */
+.menuButton {
+  display: none;
+}
+
+/* CV link: the label slides out on hover, and is always visible on touch devices. */
+
+.cvLabel {
+  max-width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  transition:
+    max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    margin-left 0.3s ease,
+    opacity 0.3s ease;
+}
+
+@media (hover: hover) {
+  .cv:hover .cvLabel,
+  .cv:focus-visible .cvLabel {
+    max-width: 10rem;
+    margin-left: 0.4rem;
+    opacity: 1;
+  }
+}
+
+@media (hover: none) {
+  .cvLabel {
+    max-width: none;
+    margin-left: 0.4rem;
+    opacity: 1;
+  }
+}
+
+/* ----- Small screens: menu button and a panel below the bar ----- */
+
+@media (max-width: 40em) {
+  .menuButton {
+    display: inline-flex;
+    /* Align the glyph with the page edge, like the icons on desktop. */
+    margin-right: calc((1.2rem - var(--nav-item-size)) / 2);
+  }
+
+  .menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 20;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.5rem var(--gutter) 1.5rem;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .open {
+    display: flex;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .link {
+    min-height: 3rem;
+    font-size: 1.25rem;
+  }
+}

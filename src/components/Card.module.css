@@ -1,0 +1,96 @@
+/*
+ * Shared card shell and meta block for Projects and Playground.
+ * The grid can tune a card through two custom properties:
+ *   --card-visual-min   minimum height of the image / swatch area
+ *   --card-title-size   font size of the title
+ */
+
+.card {
+  /* 20px on phones, 24px from tablet width up. */
+  --card-padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+
+  display: flex;
+  min-width: 0;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: inherit;
+  background: var(--color-bg);
+}
+
+.interactive {
+  transition: background-color 0.3s ease;
+}
+
+.interactive:focus-visible {
+  outline-offset: -3px;
+}
+
+@media (hover: hover) {
+  .interactive:hover {
+    background-color: var(--color-surface-hover);
+  }
+}
+
+/* ----- Visual area ----- */
+
+.visual {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: var(--card-padding);
+  overflow: hidden;
+}
+
+.image,
+.swatch {
+  flex: 1 1 0;
+  width: 100%;
+  min-height: var(--card-visual-min, 120px);
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* ----- Meta block ----- */
+
+.meta {
+  padding: 0 var(--card-padding) calc(var(--card-padding) + 1rem);
+}
+
+.category,
+.detail {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.category {
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.03em;
+}
+
+.category::before {
+  content: '// ';
+}
+
+/* Date or status line. */
+.detail {
+  letter-spacing: 0.05em;
+}
+
+.title {
+  margin-bottom: 0.75rem;
+  font-size: var(--card-title-size, 1.2rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}

@@ -1,0 +1,11 @@
+.footer {
+  padding: 1.3rem var(--gutter);
+  /* Keep clear of the iOS home indicator. */
+  padding-bottom: calc(1.3rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  /* Page end is a snap position on pages that opt into scroll snap. */
+  scroll-snap-align: end;
+}

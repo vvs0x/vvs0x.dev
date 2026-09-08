@@ -1,0 +1,64 @@
+/* The grid sits directly below the navbar and keeps --gutter to the other sides. */
+.section {
+  padding: 0 var(--gutter) var(--gutter);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(var(--grid-row), auto);
+  grid-auto-flow: dense;
+  border-top: 1px solid var(--color-border);
+  border-left: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+/*
+ * Placement rules are wrapped in :where() so they all share the specificity
+ * of a single class and the small-screen reset at the bottom wins by order.
+ */
+
+/* Per-card column spans (Playground). */
+.grid > :where([data-span='2']) {
+  grid-column: span 2;
+}
+
+.grid > :where([data-span='3']) {
+  grid-column: span 3;
+}
+
+/* Featured pattern (Projects). */
+.featured > :where(:nth-child(6n + 1)) {
+  grid-column: 1 / 3;
+}
+
+.featured > :where(:nth-child(6n + 4)) {
+  grid-column: 2 / 4;
+}
+
+.featured > :where(:nth-child(6n + 2), :nth-child(6n + 3)) {
+  grid-column: 3 / 4;
+}
+
+.featured > :where(:nth-child(6n + 5), :nth-child(6n + 6)) {
+  grid-column: 1 / 2;
+}
+
+.featured > :where(:nth-child(6n + 1), :nth-child(6n + 4)) {
+  grid-row: span 2;
+  /* Read by the card: larger visual and title for featured entries. */
+  --card-visual-min: clamp(11rem, 45vw, 300px);
+  --card-title-size: clamp(1.4rem, 1rem + 1.2vw, 1.8rem);
+}
+
+/* Small screens: one column, natural order. */
+@media (max-width: 56.24em) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .grid > * {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
