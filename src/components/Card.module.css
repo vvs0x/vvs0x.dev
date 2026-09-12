@@ -1,13 +1,15 @@
 /*
  * Shared card shell and meta block for Projects and Playground.
- * The grid can tune a card through two custom properties:
- *   --card-visual-min   minimum height of the image / swatch area
- *   --card-title-size   font size of the title
+ * The grid can tune a card through these custom properties:
+ *   --card-visual-min     minimum height of the image / swatch area
+ *   --card-padding-custom air around image / swatch and text (overrides the default)
+ *   --card-title-size     font size of the title
+ *   --card-image-inset    side gap of a centred image; the text is indented by it
  */
 
 .card {
-  /* 20px on phones, 24px from tablet width up. */
-  --card-padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
+  /* 28px on phones, 32px from tablet width up, unless the grid says otherwise. */
+  --card-padding: var(--card-padding-custom, clamp(1.75rem, 1.5rem + 1vw, 2rem));
 
   display: flex;
   min-width: 0;
@@ -54,14 +56,17 @@
   min-height: var(--card-visual-min, 120px);
 }
 
+/* Show the whole image, centred, instead of cropping it. */
 .image {
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* ----- Meta block ----- */
 
 .meta {
   padding: 0 var(--card-padding) calc(var(--card-padding) + 1rem);
+  /* Line the text up with the picture's left edge, not the image box. */
+  padding-left: calc(var(--card-padding) + var(--card-image-inset, 0px));
 }
 
 .category,

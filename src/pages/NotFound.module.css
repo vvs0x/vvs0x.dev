@@ -31,10 +31,6 @@
 
 @media (hover: hover) {
   .back:hover {
-    background: var(--gradient-accent);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    color: var(--color-text);
   }
 }

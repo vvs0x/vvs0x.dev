@@ -17,9 +17,7 @@ export default function PlaygroundCard({ item }: { item: PlaygroundItem }) {
       <div className={isThought ? `${cardStyles.visual} ${styles.thought}` : cardStyles.visual}>
         {isThought ? (
           <>
-            <p className={styles.headline}>
-              {excerpt ? title : <span className="gradient-text">{title}</span>}
-            </p>
+            <p className={styles.headline}>{title}</p>
             {excerpt && <p className={styles.excerpt}>{excerpt}</p>}
           </>
         ) : (

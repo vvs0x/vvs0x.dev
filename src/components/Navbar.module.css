@@ -4,6 +4,8 @@
   align-items: center;
   justify-content: flex-end;
   padding: var(--nav-padding-block) var(--gutter);
+  /* Full-width line, counted in --nav-height; pages can set --nav-line to 0. */
+  border-bottom: var(--nav-line) solid var(--color-border);
   /* Page top is a snap position on pages that opt into scroll snap. */
   scroll-snap-align: start;
 }

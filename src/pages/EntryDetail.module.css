@@ -1,17 +1,29 @@
-.article {
-  --block-gap: clamp(2.5rem, 6vw, 4rem);
-
-  padding: clamp(2rem, 5vw, 4rem) var(--gutter) 6rem;
-}
-
-.header,
-.body,
-.links {
-  max-width: var(--measure);
-  margin-inline: auto;
-}
+/*
+ * Detail page: a header with title (and image), then two columns divided by
+ * a line. The left column is a menu of the text's sections that stays in
+ * view while the text on the right scrolls.
+ */
 
 /* ----- Header ----- */
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem var(--gutter);
+  padding: clamp(2rem, 5vw, 4rem) var(--gutter);
+}
+
+.withImage {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+}
+
+/* Category and title at the top, date at the bottom edge of the image. */
+.intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
 
 .category,
 .date {
@@ -32,7 +44,7 @@
 }
 
 .title {
-  margin-bottom: 1rem;
+  max-width: 18ch;
   font-size: clamp(2rem, 1rem + 3.5vw, 3.5rem);
   line-height: 1.05;
   letter-spacing: -0.025em;
@@ -43,32 +55,99 @@
   letter-spacing: 0.05em;
 }
 
-/* ----- Image ----- */
-
-.figure {
-  max-width: 56rem;
-  margin: var(--block-gap) auto 0;
-  border: 1px solid var(--color-border);
-}
-
-.figure img {
+.media img {
   width: 100%;
   height: auto;
 }
 
-/* ----- Body ----- */
+/* ----- Two-column layout ----- */
 
-.body {
-  margin-top: var(--block-gap);
+.layout {
+  --column-padding-top: clamp(2rem, 5vw, 4rem);
+
+  display: grid;
+  grid-template-columns: minmax(14rem, 23%) minmax(0, 1fr);
+  border-top: 1px solid var(--color-border);
 }
 
-.body p {
+.sidebar {
+  border-right: 1px solid var(--color-border);
+}
+
+.toc {
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  max-height: 100dvh;
+  padding: var(--column-padding-top) var(--gutter) 2rem;
+  overflow-y: auto;
+}
+
+.tocList {
+  display: flex;
+  flex-direction: column;
+}
+
+.tocLink {
+  position: relative;
+  display: block;
+  padding-block: 0.55rem;
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.tocLink.active {
+  color: var(--color-text);
+}
+
+/* Marker at the page edge next to the active item. */
+.tocLink.active::before {
+  content: '';
+  position: absolute;
+  top: 0.55rem;
+  bottom: 0.55rem;
+  left: calc(-1 * var(--gutter));
+  width: 2px;
+  background: var(--color-text);
+}
+
+@media (hover: hover) {
+  .tocLink:hover {
+    color: var(--color-text);
+  }
+}
+
+.content {
+  padding: var(--column-padding-top) clamp(1.5rem, 5vw, 5rem) 6rem;
+}
+
+/* ----- Text ----- */
+
+.section {
+  max-width: var(--measure);
+  /* Keep a little air above a heading that was jumped to from the menu. */
+  scroll-margin-top: 2rem;
+}
+
+.section + .section {
+  margin-top: 3rem;
+}
+
+.heading {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.section p {
   font-size: 1.1rem;
   line-height: 1.6;
   color: var(--color-text-muted);
 }
 
-.body p + p {
+.section p + p {
   margin-top: 1.5rem;
 }
 
@@ -78,6 +157,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem 2rem;
+  max-width: var(--measure);
   margin-top: 3rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--color-border);
@@ -95,5 +175,63 @@
 @media (hover: hover) {
   .links a:hover {
     color: var(--color-text-muted);
+  }
+}
+
+/* ----- Small screens: image below the title, menu as a row above the text ----- */
+
+@media (max-width: 56.24em) {
+  .withImage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .intro {
+    gap: 1rem;
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--color-bg);
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .toc {
+    position: static;
+    max-height: none;
+    padding: 0 var(--gutter);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+
+  .tocList {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+
+  .tocLink {
+    padding-block: 0.85rem;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .tocLink.active::before {
+    display: none;
+  }
+
+  .content {
+    padding: 2rem var(--gutter) 4rem;
+  }
+
+  /* Leave room for the sticky menu row when jumping to a heading. */
+  .section {
+    scroll-margin-top: 4.5rem;
   }
 }

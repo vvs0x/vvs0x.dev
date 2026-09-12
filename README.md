@@ -20,7 +20,7 @@ All content lives in `src/data/`:
 - `projects.ts` feeds the Projects grid and `/projects/<id>`.
 - `playground.ts` feeds the Playground grid and `/playground/<id>`.
 
-An entry with a `body` (array of paragraphs) and a `date` gets a detail page and its card becomes a link. An entry without them is a placeholder: its card is not clickable and shows "Coming soon" instead of the date. Optional fields: `image` (put the file in `public/images/`), `color` (swatch when there is no image), `links` (shown below the body).
+An entry with a `body` and a `date` gets a detail page and its card becomes a link. The `body` is a list of sections, each with a `heading` and its `paragraphs`; the headings form the side menu of the detail page. An entry without a body is a placeholder: its card is not clickable and shows "Coming soon" instead of the date. Optional fields: `image` (put the file in `public/images/`), `color` (swatch when there is no image), `links` (shown below the body).
 
 Dates are ISO strings (`YYYY-MM-DD`) and are formatted at render time. The `id` is the URL slug.
 

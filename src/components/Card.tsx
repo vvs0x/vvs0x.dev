@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Card.module.css';
 
@@ -7,12 +7,14 @@ interface CardProps {
   to?: string;
   /** Desktop column span, read by the grid. */
   colSpan?: number;
+  /** Inline custom properties for the card, e.g. --card-image-inset. */
+  style?: CSSProperties;
   children: ReactNode;
 }
 
-export default function Card({ to, colSpan, children }: CardProps) {
+export default function Card({ to, colSpan, style, children }: CardProps) {
   return (
-    <li className={styles.card} data-span={colSpan}>
+    <li className={styles.card} data-span={colSpan} style={style}>
       {to ? (
         <Link to={to} className={`${styles.inner} ${styles.interactive}`}>
           {children}

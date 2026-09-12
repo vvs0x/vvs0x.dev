@@ -3,6 +3,7 @@
   padding: 0 var(--gutter) var(--gutter);
 }
 
+/* The grid draws its own top edge; the navbar line is off on these pages. */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -46,8 +47,9 @@
 
 .featured > :where(:nth-child(6n + 1), :nth-child(6n + 4)) {
   grid-row: span 2;
-  /* Read by the card: larger visual and title for featured entries. */
+  /* Read by the card: larger visual, more air and a larger title for featured entries. */
   --card-visual-min: clamp(11rem, 45vw, 300px);
+  --card-padding-custom: clamp(1.75rem, 1rem + 2.5vw, 3.5rem);
   --card-title-size: clamp(1.4rem, 1rem + 1.2vw, 1.8rem);
 }
 

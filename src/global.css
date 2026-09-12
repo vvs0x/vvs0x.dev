@@ -23,8 +23,7 @@
   --color-text: #111111;
   --color-text-muted: #666666;
   --color-border: #eaeaea;
-  --color-surface-hover: #efefef;
-  --gradient-accent: linear-gradient(90deg, #7c3aed, #3b82f6);
+  --color-surface-hover: #E3E3E3;
 
   --font-sans: 'APK Protocol', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif;
@@ -33,14 +32,16 @@
   /* Layout. Content containers keep this distance to the page edge,
      the navbar and the footer: 16px on small phones, ~3.5vw on desktop. */
   --gutter: clamp(1rem, 3.5vw, 3.25rem);
-  /* Navbar: vertical padding, height of links and icon boxes, resulting total. */
+  /* Navbar: vertical padding, height of links and icon boxes, bottom line
+     (pages can switch it off, see "Page opt-outs"), and the resulting total. */
   --nav-padding-block: clamp(0.75rem, 1.75vw, 1.5625rem);
   --nav-item-size: 40px;
-  --nav-height: calc(2 * var(--nav-padding-block) + var(--nav-item-size));
+  --nav-line: 1px;
+  --nav-height: calc(2 * var(--nav-padding-block) + var(--nav-item-size) + var(--nav-line));
   /* Row height of the Projects and Playground grids. Both grids read this,
      so two rows always add up to the same container height. Capped so that
-     navbar, two rows and the bottom gutter fill exactly one viewport; the
-     footer then starts right below the fold. */
+     navbar, the grid's top border, two rows and the bottom gutter fill exactly
+     one viewport; the footer then starts right below the fold. */
   --grid-row: min(23rem, calc((100vh - var(--nav-height) - var(--gutter) - 1px) / 2));
   /* Width of text columns (650px). */
   --measure: 40.625rem;
@@ -77,6 +78,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* Anchor jumps (detail page menu) glide; route changes scroll instantly. */
+  scroll-behavior: smooth;
 }
 
 body {
@@ -135,6 +138,14 @@ h3 {
   }
 }
 
+/* ---------- Page opt-outs ----------
+   A page whose content brings its own top edge (the card grids) switches the
+   navbar's bottom line off by putting data-nav-line="none" on an element. */
+
+:root:has([data-nav-line='none']) {
+  --nav-line: 0px;
+}
+
 /* ---------- Scroll snap ----------
    A page opts in by putting data-snap on one of its elements. The navbar
    (page top) and the footer (page end) are always snap positions; a page can
@@ -153,15 +164,6 @@ h3 {
 }
 
 /* ---------- Utilities ---------- */
-
-.gradient-text {
-  display: inline-block;
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
 
 .visually-hidden {
   position: absolute;

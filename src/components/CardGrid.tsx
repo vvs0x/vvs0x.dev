@@ -16,7 +16,11 @@ export default function CardGrid({ children, pattern, snap = false }: CardGridPr
   const className = pattern === 'featured' ? `${styles.grid} ${styles.featured}` : styles.grid;
 
   return (
-    <section className={styles.section} data-snap={snap ? 'desktop' : undefined}>
+    <section
+      className={styles.section}
+      data-snap={snap ? 'desktop' : undefined}
+      data-nav-line="none"
+    >
       <ul className={className}>{children}</ul>
     </section>
   );

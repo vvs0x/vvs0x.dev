@@ -5,9 +5,8 @@ export default function About() {
     <>
       <section className={styles.hero} data-snap>
         <h1 className={styles.headline}>
-          I traded <span className="gradient-text">sawdust for code,</span>
-          <br className={styles.wideOnly} /> but I still can’t stand{' '}
-          <span className="gradient-text">sloppy work.</span>
+          I traded sawdust for code,
+          <br className={styles.wideOnly} /> but I still can’t stand sloppy work.
         </h1>
         <p className={styles.lead}>
           Former carpenter, now a data science student. Different tools, same instinct: build
