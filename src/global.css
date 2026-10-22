@@ -23,7 +23,9 @@
   --color-text: #111111;
   --color-text-muted: #666666;
   --color-border: #eaeaea;
-  --color-surface-hover: #E3E3E3;
+  /* Card hover. Must stay lighter than --color-border, otherwise the grid
+     lines vanish into the hovered card. */
+  --color-surface-hover: #f4f4f4;
 
   --font-sans: 'APK Protocol', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif;
@@ -32,19 +34,21 @@
   /* Layout. Content containers keep this distance to the page edge,
      the navbar and the footer: 16px on small phones, ~3.5vw on desktop. */
   --gutter: clamp(1rem, 3.5vw, 3.25rem);
-  /* Navbar: vertical padding, height of links and icon boxes, bottom line
-     (pages can switch it off, see "Page opt-outs"), and the resulting total. */
+  /* Navbar: vertical padding, height of links and icon boxes, and the total
+     including its 1px bottom line. */
   --nav-padding-block: clamp(0.75rem, 1.75vw, 1.5625rem);
   --nav-item-size: 40px;
-  --nav-line: 1px;
-  --nav-height: calc(2 * var(--nav-padding-block) + var(--nav-item-size) + var(--nav-line));
+  --nav-height: calc(2 * var(--nav-padding-block) + var(--nav-item-size) + 1px);
   /* Row height of the Projects and Playground grids. Both grids read this,
      so two rows always add up to the same container height. Capped so that
-     navbar, the grid's top border, two rows and the bottom gutter fill exactly
-     one viewport; the footer then starts right below the fold. */
-  --grid-row: min(23rem, calc((100vh - var(--nav-height) - var(--gutter) - 1px) / 2));
+     navbar, two rows and the bottom inset fill exactly one viewport; the
+     footer then starts right below the fold. */
+  --grid-row: min(23rem, calc((100vh - var(--nav-height) - var(--frame-inset)) / 2));
   /* Width of text columns (650px). */
   --measure: 40.625rem;
+  /* Vertical page-frame rules, measured from the viewport edge. Half the
+     gutter, so frame and content keep the same distance at every width. */
+  --frame-inset: calc(var(--gutter) / 2);
 
   color-scheme: light;
 }
@@ -54,8 +58,7 @@
    where they are used. Keep them in sync with this list:
      40em    (640px)  navbar collapses into a menu button, smaller grid rows
      48em    (768px)  hero headline gets its forced line break
-     56.24em (900px)  grids switch between one and three columns,
-                      grid snap on/off */
+     56.24em (900px)  grids switch between one and three columns */
 
 @media (max-width: 40em) {
   :root {
@@ -138,28 +141,34 @@ h3 {
   }
 }
 
-/* ---------- Page opt-outs ----------
-   A page whose content brings its own top edge (the card grids) switches the
-   navbar's bottom line off by putting data-nav-line="none" on an element. */
+/* ---------- Page frame ----------
+   Two vertical rules just inside the viewport edges, running the full height
+   of every page. They sit outside all content, so nothing overlaps them.
+   Hidden on small screens, where there is no room for a frame. */
 
-:root:has([data-nav-line='none']) {
-  --nav-line: 0px;
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-border);
+  pointer-events: none;
 }
 
-/* ---------- Scroll snap ----------
-   A page opts in by putting data-snap on one of its elements. The navbar
-   (page top) and the footer (page end) are always snap positions; a page can
-   add its own with scroll-snap-align. data-snap="desktop" limits snapping to
-   the multi-column layout: a single-column grid is taller than the screen,
-   so snapping would only get in the way of reading through it. */
-
-:root:has([data-snap]) {
-  scroll-snap-type: y mandatory;
+body::before {
+  left: var(--frame-inset);
 }
 
-@media (max-width: 56.24em) {
-  :root:has([data-snap='desktop']) {
-    scroll-snap-type: none;
+body::after {
+  right: var(--frame-inset);
+}
+
+@media (max-width: 40em) {
+  body::before,
+  body::after {
+    display: none;
   }
 }
 

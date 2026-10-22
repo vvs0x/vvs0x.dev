@@ -7,7 +7,7 @@ export default function Projects() {
     <>
       <title>Projects – vvs0x.dev</title>
       <h1 className="visually-hidden">Projects</h1>
-      <CardGrid pattern="featured" snap>
+      <CardGrid pattern="featured">
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}

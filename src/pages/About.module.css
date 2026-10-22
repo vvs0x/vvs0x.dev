@@ -1,10 +1,4 @@
-/*
- * The page is two full-height screens plus the footer and opts into scroll
- * snap (data-snap on the hero). Snap positions:
- *   1. page top (navbar + hero fill the first viewport)
- *   2. the story, flush with the top of the viewport
- *   3. page end, with the footer fully visible
- */
+/* The page is two full-height screens plus the footer. */
 
 /* ----- Hero ----- */
 
@@ -58,7 +52,6 @@
   min-height: 100vh;
   min-height: 100svh;
   padding: 4rem var(--gutter);
-  scroll-snap-align: start;
 }
 
 .prose {

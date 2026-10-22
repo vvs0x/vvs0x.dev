@@ -4,10 +4,8 @@
   align-items: center;
   justify-content: flex-end;
   padding: var(--nav-padding-block) var(--gutter);
-  /* Full-width line, counted in --nav-height; pages can set --nav-line to 0. */
-  border-bottom: var(--nav-line) solid var(--color-border);
-  /* Page top is a snap position on pages that opt into scroll snap. */
-  scroll-snap-align: start;
+  /* Full-width line; its 1px is counted in --nav-height. */
+  border-bottom: 1px solid var(--color-border);
 }
 
 /* Desktop: the menu is simply the bar's content, links left, icons right. */
@@ -86,6 +84,10 @@
   white-space: nowrap;
   font-size: 1rem;
   letter-spacing: 0.01em;
+  /* APK Protocol has a deep descent, so a vertically centred line box leaves
+     the visible letters sitting high. Nudge them onto the icon's centre.
+     A transform, so the navbar's height stays untouched. */
+  transform: translateY(0.15625em);
   opacity: 0;
   transition:
     max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),

@@ -7,7 +7,7 @@ export default function Playground() {
     <>
       <title>Playground – vvs0x.dev</title>
       <h1 className="visually-hidden">Playground</h1>
-      <CardGrid snap>
+      <CardGrid>
         {playground.map((item) => (
           <PlaygroundCard key={item.id} item={item} />
         ))}

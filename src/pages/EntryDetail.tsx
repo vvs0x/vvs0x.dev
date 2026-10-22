@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { Entry } from '../types';
 import { projects } from '../data/projects';
@@ -26,6 +26,35 @@ export default function EntryDetail({ collection }: { collection: Collection }) 
   );
   const sectionIds = useMemo(() => sections.map((section) => section.id), [sections]);
   const activeId = useActiveSection(sectionIds);
+
+  // One bar slides to the active item instead of a marker per item, so the
+  // move between sections can be animated. Position is measured from the
+  // active link, minus its padding, so the bar matches the text line.
+  const listRef = useRef<HTMLUListElement>(null);
+  const [marker, setMarker] = useState<{ top: number; height: number } | null>(null);
+
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+
+    const measure = () => {
+      const link = list.querySelector<HTMLElement>('[aria-current]');
+      if (!link) {
+        setMarker(null);
+        return;
+      }
+      const { paddingTop, paddingBottom } = getComputedStyle(link);
+      setMarker({
+        top: link.offsetTop + parseFloat(paddingTop),
+        height: link.offsetHeight - parseFloat(paddingTop) - parseFloat(paddingBottom),
+      });
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, [activeId, sections]);
 
   // Placeholders have no body and therefore no page.
   if (!entry?.body) {
@@ -67,7 +96,16 @@ export default function EntryDetail({ collection }: { collection: Collection }) 
       <div className={styles.layout}>
         <aside className={styles.sidebar}>
           <nav className={styles.toc} aria-label="On this page">
-            <ul className={styles.tocList}>
+            <span
+              className={styles.marker}
+              aria-hidden="true"
+              style={
+                marker
+                  ? { transform: `translateY(${marker.top}px)`, height: `${marker.height}px` }
+                  : { opacity: 0 }
+              }
+            />
+            <ul className={styles.tocList} ref={listRef}>
               {sections.map((section) => (
                 <li key={section.id}>
                   <a

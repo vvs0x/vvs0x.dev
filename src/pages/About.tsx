@@ -3,7 +3,7 @@ import styles from './About.module.css';
 export default function About() {
   return (
     <>
-      <section className={styles.hero} data-snap>
+      <section className={styles.hero}>
         <h1 className={styles.headline}>
           I traded sawdust for code,
           <br className={styles.wideOnly} /> but I still can’t stand sloppy work.

@@ -1,16 +1,17 @@
-/* The grid sits directly below the navbar and keeps --gutter to the other sides. */
+/*
+ * The grid runs from the navbar's line down, and sideways exactly to the two
+ * page-frame rules: they are its outer edges, so it draws none of its own.
+ * Only the dividers between cards come from the cards themselves.
+ */
 .section {
-  padding: 0 var(--gutter) var(--gutter);
+  padding: 0 var(--frame-inset) var(--frame-inset);
 }
 
-/* The grid draws its own top edge; the navbar line is off on these pages. */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-auto-rows: minmax(var(--grid-row), auto);
   grid-auto-flow: dense;
-  border-top: 1px solid var(--color-border);
-  border-left: 1px solid var(--color-border);
   background: var(--color-bg);
 }
 
@@ -62,5 +63,16 @@
   .grid > * {
     grid-column: auto;
     grid-row: auto;
+  }
+}
+
+/* No page frame below this width, so the grid draws its own left edge again. */
+@media (max-width: 40em) {
+  .section {
+    padding: 0 var(--gutter) var(--gutter);
+  }
+
+  .grid {
+    border-left: 1px solid var(--color-border);
   }
 }

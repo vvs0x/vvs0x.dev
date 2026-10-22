@@ -8,19 +8,13 @@ interface CardGridProps {
    * two rows, alternating between the left and the right side.
    */
   pattern?: 'featured';
-  /** Snap scrolling between the grid (page top) and the footer, desktop only. */
-  snap?: boolean;
 }
 
-export default function CardGrid({ children, pattern, snap = false }: CardGridProps) {
+export default function CardGrid({ children, pattern }: CardGridProps) {
   const className = pattern === 'featured' ? `${styles.grid} ${styles.featured}` : styles.grid;
 
   return (
-    <section
-      className={styles.section}
-      data-snap={snap ? 'desktop' : undefined}
-      data-nav-line="none"
-    >
+    <section className={styles.section}>
       <ul className={className}>{children}</ul>
     </section>
   );

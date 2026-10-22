@@ -89,7 +89,6 @@
 }
 
 .tocLink {
-  position: relative;
   display: block;
   padding-block: 0.55rem;
   font-size: 1.05rem;
@@ -101,15 +100,21 @@
   color: var(--color-text);
 }
 
-/* Marker at the page edge next to the active item. */
-.tocLink.active::before {
-  content: '';
+/*
+ * One bar for the whole menu, sitting just inside the left page-frame rule.
+ * Its position and height come from the active link, so it glides from one
+ * section to the next instead of jumping.
+ */
+.marker {
   position: absolute;
-  top: 0.55rem;
-  bottom: 0.55rem;
-  left: calc(-1 * var(--gutter));
+  top: 0;
+  left: calc(var(--frame-inset) + 1px);
   width: 2px;
   background: var(--color-text);
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.2s ease;
 }
 
 @media (hover: hover) {
@@ -222,7 +227,7 @@
     white-space: nowrap;
   }
 
-  .tocLink.active::before {
+  .marker {
     display: none;
   }
 
