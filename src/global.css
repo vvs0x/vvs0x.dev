@@ -49,6 +49,10 @@
   /* Vertical page-frame rules, measured from the viewport edge. Half the
      gutter, so frame and content keep the same distance at every width. */
   --frame-inset: calc(var(--gutter) / 2);
+  /* The frame is the outer boundary of the page: a rule that runs across it
+     stops at the two vertical lines instead of carrying on to the viewport
+     edge. Zero below 40em, where there is no frame to stop at. */
+  --rule-inset: var(--frame-inset);
 
   color-scheme: light;
 }
@@ -63,6 +67,7 @@
 @media (max-width: 40em) {
   :root {
     --grid-row: 18rem;
+    --rule-inset: 0px;
   }
 }
 

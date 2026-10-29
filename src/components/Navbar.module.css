@@ -3,8 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: var(--nav-padding-block) var(--gutter);
-  /* Full-width line; its 1px is counted in --nav-height. */
+  /* The bar ends at the page frame and takes that inset back out of its own
+     padding, so its content keeps the full gutter to the page edge. */
+  margin-inline: var(--rule-inset);
+  padding: var(--nav-padding-block) calc(var(--gutter) - var(--rule-inset));
+  /* Line from frame to frame; its 1px is counted in --nav-height. */
   border-bottom: 1px solid var(--color-border);
 }
 

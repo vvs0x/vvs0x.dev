@@ -65,9 +65,23 @@
 .layout {
   --column-padding-top: clamp(2rem, 5vw, 4rem);
 
+  position: relative;
   display: grid;
   grid-template-columns: minmax(14rem, 23%) minmax(0, 1fr);
-  border-top: 1px solid var(--color-border);
+}
+
+/*
+ * Divider to the header above. Drawn, not a border, because the columns have
+ * to keep the full page width while the line stops at the frame.
+ */
+.layout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: var(--rule-inset);
+  left: var(--rule-inset);
+  height: 1px;
+  background: var(--color-border);
 }
 
 .sidebar {
@@ -198,10 +212,12 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /* Its white background would cover the frame rules, so it ends at them. */
   .sidebar {
     position: sticky;
     top: 0;
     z-index: 10;
+    margin-inline: var(--rule-inset);
     background: var(--color-bg);
     border-right: 0;
     border-bottom: 1px solid var(--color-border);
@@ -210,7 +226,7 @@
   .toc {
     position: static;
     max-height: none;
-    padding: 0 var(--gutter);
+    padding: 0 calc(var(--gutter) - var(--rule-inset));
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
