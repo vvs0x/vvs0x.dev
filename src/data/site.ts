@@ -1,4 +1,4 @@
-/** Site-wide facts used by the navbar and the footer. */
+/** Site-wide facts used by the navbar and the About page. */
 export const site = {
   name: 'Valentín Schwarz',
   email: 'vschwarz@ik.me',

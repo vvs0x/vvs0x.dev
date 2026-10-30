@@ -1,4 +1,7 @@
+import { site } from '../data/site';
 import styles from './About.module.css';
+
+const YEAR = new Date().getFullYear();
 
 export default function About() {
   return (
@@ -30,6 +33,10 @@ export default function About() {
             demands precision, reliable tooling, and a deep respect for the raw materials. My goal
             isn't just to write scripts that run; it's to engineer infrastructure that lasts.
           </p>
+
+          <footer className={styles.colophon}>
+            © {YEAR} {site.name}. All rights reserved.
+          </footer>
         </div>
       </section>
     </>

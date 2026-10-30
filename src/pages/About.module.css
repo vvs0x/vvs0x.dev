@@ -1,4 +1,4 @@
-/* The page is two full-height screens plus the footer. */
+/* The page is two full-height screens; the second ends with the copyright. */
 
 /* ----- Hero ----- */
 
@@ -71,4 +71,14 @@
 
 .prose p + p {
   margin-top: 1.5rem;
+}
+
+/*
+ * The site's only copyright line. It belongs to the story column, not to a
+ * bar of its own, so every other page ends with its content.
+ */
+.colophon {
+  margin-top: 4rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
 }

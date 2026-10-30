@@ -31,8 +31,8 @@
     sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 
-  /* Layout. Content containers keep this distance to the page edge,
-     the navbar and the footer: 16px on small phones, ~3.5vw on desktop. */
+  /* Layout. Content containers keep this distance to the page edge and to
+     the navbar: 16px on small phones, ~3.5vw on desktop. */
   --gutter: clamp(1rem, 3.5vw, 3.25rem);
   /* Navbar: vertical padding, height of links and icon boxes, and the total
      including its 1px bottom line. */
@@ -41,8 +41,8 @@
   --nav-height: calc(2 * var(--nav-padding-block) + var(--nav-item-size) + 1px);
   /* Row height of the Projects and Playground grids. Both grids read this,
      so two rows always add up to the same container height. Capped so that
-     navbar, two rows and the bottom inset fill exactly one viewport; the
-     footer then starts right below the fold. */
+     navbar, two rows and the bottom inset fill exactly one viewport, which
+     leaves those pages with nothing below the fold. */
   --grid-row: min(23rem, calc((100vh - var(--nav-height) - var(--frame-inset)) / 2));
   /* Width of text columns (650px). */
   --measure: 40.625rem;

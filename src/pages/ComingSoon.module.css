@@ -1,5 +1,4 @@
-/* Fills the space below the navbar exactly, so the text is centred in it
-   and the footer starts below the fold. */
+/* Fills the space below the navbar exactly, so the text is centred in it. */
 .section {
   display: flex;
   align-items: center;

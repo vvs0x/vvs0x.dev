@@ -1,11 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
-import Footer from './Footer';
 import styles from './Layout.module.css';
 
 /**
- * Navbar and main content fill at least the first viewport; the footer
- * starts below the fold and is revealed by scrolling.
+ * Navbar and main content fill at least the first viewport. There is no site
+ * footer; the copyright line sits at the end of the About page.
  */
 export default function Layout() {
   return (
@@ -19,7 +18,6 @@ export default function Layout() {
           <Outlet />
         </main>
       </div>
-      <Footer />
     </>
   );
 }
