@@ -1,4 +1,4 @@
-# vvs0x.dev
+# Portfolio Website
 
 Personal site of Valentín Schwarz. React 19, TypeScript, Vite, React Router. No UI framework, styling via CSS Modules.
 
