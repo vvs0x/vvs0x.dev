@@ -1,0 +1,56 @@
+/*
+ * Light / dark switch, like on void.cloud. Light: a light grey track with a
+ * white knob and a dark sun. Dark: a dark track with a black knob and a white
+ * moon. The colours are the --toggle-* tokens in global.css; the mobile menu,
+ * which has the opposite colours of the page, overrides them on the element.
+ */
+/* 40 × 20px: no taller than the navbar icons, like on void.cloud. */
+.toggle {
+  position: relative;
+  flex: none;
+  width: 2.5rem;
+  height: 1.25rem;
+  border: 1px solid var(--toggle-border);
+  border-radius: 999px;
+  background: var(--toggle-track);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* The small switch gets a larger invisible hit area for fingers. */
+.toggle::before {
+  content: '';
+  position: absolute;
+  inset: -10px -4px;
+}
+
+/* 16px circle, 1px from the edge; it slides 20px to the right in dark mode. */
+.knob {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  display: grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--toggle-knob-border);
+  border-radius: 50%;
+  background: var(--toggle-knob);
+  box-shadow: var(--toggle-knob-shadow);
+  color: var(--toggle-icon);
+  font-size: 0.6875rem;
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s ease;
+}
+
+.toggle[aria-checked='true'] .knob {
+  transform: translateX(1.25rem);
+}
+
+@media (hover: hover) {
+  .toggle:hover {
+    border-color: var(--color-text-muted);
+  }
+}

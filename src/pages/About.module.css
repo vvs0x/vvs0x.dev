@@ -1,84 +1,121 @@
-/* The page is two full-height screens; the second ends with the copyright. */
+/*
+ * One screen below the navbar, split in half by a line: a short text on the
+ * left, a photo on the right. Like the card grids, the box runs sideways to
+ * the page-frame rules and closes with a line just above the bottom edge.
+ */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: calc(100vh - var(--nav-height) - var(--frame-inset));
+  min-height: calc(100svh - var(--nav-height) - var(--frame-inset));
+  margin: 0 var(--frame-inset) var(--frame-inset);
+  border-bottom: 1px solid var(--color-border);
+}
 
-/* ----- Hero ----- */
+/* ----- Left: text ----- */
 
-/* Together with the navbar this fills exactly one viewport. */
-.hero {
+/*
+ * Label at the top edge, text on the bottom edge, level with the bottom of
+ * the photo: the same build as the cards and the detail-page header.
+ */
+.text {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - var(--nav-height));
-  min-height: calc(100svh - var(--nav-height));
-  padding: 3rem var(--gutter);
-  text-align: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(2rem, 4vw, 4rem) calc(var(--gutter) - var(--frame-inset));
+  border-right: 1px solid var(--color-border);
 }
 
-.headline {
-  max-width: 56.25rem;
-  margin-bottom: 1.5rem;
-  font-size: clamp(2rem, 1rem + 4.5vw, 4rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-}
-
-/* The forced line break only makes sense once the headline fits in two lines. */
-.wideOnly {
-  display: none;
-}
-
-@media (min-width: 48em) {
-  .wideOnly {
-    display: inline;
-  }
-}
-
-.lead {
-  max-width: var(--measure);
-  font-size: 1.1rem;
+/* The page heading, styled like the category label on the cards. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: inherit;
   line-height: 1.5;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
   color: var(--color-text-muted);
 }
 
-/* ----- Story ----- */
-
-/* Fills a full viewport so the hero is out of view while reading. */
-.story {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  min-height: 100svh;
-  padding: 4rem var(--gutter);
-}
-
-.prose {
-  max-width: var(--measure);
-}
-
-.storyTitle {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-}
-
-.prose p {
-  font-size: 1.1rem;
-  line-height: 1.5;
-  color: var(--color-text-muted);
-}
-
-.prose p + p {
-  margin-top: 1.5rem;
+.label::before {
+  content: '// ';
 }
 
 /*
- * The site's only copyright line. It belongs to the story column, not to a
- * bar of its own, so every other page ends with its content.
+ * The same running text as the detail pages of Projects and Playground, in
+ * two colours: the first paragraph in the text colour, the rest in grey.
  */
-.colophon {
-  margin-top: 4rem;
-  font-size: 0.85rem;
+.copy {
+  max-width: var(--measure);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
   color: var(--color-text-muted);
+}
+
+.copy > :first-child {
+  color: var(--color-text);
+}
+
+.copy > * + * {
+  margin-top: var(--gap-body);
+}
+
+/* ----- Right: photo ----- */
+
+/* The photo fills its half and is cropped to it. */
+.photo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: var(--color-surface-hover);
+}
+
+.photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.placeholder::before {
+  content: '// ';
+}
+
+/* ----- Small screens: text, then the photo below it ----- */
+
+@media (max-width: 56.24em) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .text {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .photo {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+/* Phones: no page frame, so the box keeps the normal gutter. */
+@media (max-width: 40em) {
+  .split {
+    margin: 0 var(--gutter) var(--gutter);
+  }
+
+  .text {
+    padding-inline: 0;
+  }
 }

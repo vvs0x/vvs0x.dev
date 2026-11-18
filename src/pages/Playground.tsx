@@ -1,15 +1,16 @@
 import CardGrid from '../components/CardGrid';
-import PlaygroundCard from '../components/PlaygroundCard';
+import EntryCard from '../components/EntryCard';
 import { playground } from '../data/playground';
+import { pageTitle } from '../utils/pageTitle';
 
 export default function Playground() {
   return (
     <>
-      <title>Playground – vvs0x.dev</title>
+      <title>{pageTitle('Playground')}</title>
       <h1 className="visually-hidden">Playground</h1>
       <CardGrid>
         {playground.map((item) => (
-          <PlaygroundCard key={item.id} item={item} />
+          <EntryCard key={item.id} entry={item} basePath="/playground" />
         ))}
       </CardGrid>
     </>

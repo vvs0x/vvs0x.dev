@@ -2,7 +2,7 @@ import type { Project } from '../types';
 
 /*
  * Entries with a `body` get a detail page at /projects/<id>.
- * Entries without one are placeholders and show "Coming soon".
+ * Entries without one are placeholders: their cards are not clickable.
  *
  * Each body section becomes a heading in the text and an item in the
  * page's side menu. The texts below are draft copy.
@@ -45,7 +45,7 @@ export const projects: Project[] = [
       {
         heading: 'Outcome',
         paragraphs: [
-          'A small project, but it removed a recurring manual task, and the dashboard is now trustworthy because no number in it was typed by hand. It is also the kind of foundation the backtesting work builds on.',
+          'A small project, but it removed a recurring manual task, and the dashboard is now trustworthy because no number in it was typed by hand.',
         ],
       },
     ],

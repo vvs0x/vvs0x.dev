@@ -11,13 +11,38 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Desktop: the menu is simply the bar's content, links left, icons right. */
+/* ----- Logo ----- */
+
+/* Desktop: logo, then the links with a little more room, like viteplus.dev. */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  min-width: var(--nav-item-size);
+  min-height: var(--nav-item-size);
+  /* With the empty right half of the 40px box, about 56px of air on desktop. */
+  margin-right: clamp(1rem, 2.5vw, 2.25rem);
+  color: var(--color-text);
+}
+
+.logoMark {
+  width: 1.5rem;
+  height: 1.5rem;
+  /* The stroke starts a little inside the box; line it up with the page edge. */
+  margin-left: -0.1rem;
+}
+
+/* Desktop: the menu is simply the bar's content: links left, theme switch
+   and icons right. */
 .menu {
   display: flex;
   flex: 1;
   align-items: center;
-  justify-content: space-between;
+  /* Also the space between the theme switch and the CV icon. */
   gap: 2rem;
+}
+
+.theme {
+  margin-left: auto;
 }
 
 /* ----- Main navigation ----- */
@@ -38,9 +63,11 @@
 
 /* ----- Contact icons ----- */
 
+/* Visible glyphs of about 18px in 36px boxes, like viteplus.dev. Lucide
+   icons keep a little air inside their grid, hence the slightly larger size. */
 .contact {
-  --icon-size: 1.2rem;
-  --icon-box: var(--nav-item-size);
+  --icon-size: 1.25rem;
+  --icon-box: 36px;
 
   display: flex;
   align-items: center;
@@ -57,7 +84,7 @@
   /* Explicit inset so the glyph stays put even when the CV label widens the box. */
   padding-inline: calc((var(--icon-box, var(--nav-item-size)) - var(--icon-size, 1.2rem)) / 2);
   font-size: var(--icon-size, 1.2rem);
-  color: var(--color-text-muted);
+  color: var(--color-icon);
   transition: color 0.2s ease;
 }
 
@@ -73,7 +100,8 @@
   }
 }
 
-/* Declared after .iconLink so that it wins on desktop. */
+/* Declared after .iconLink so that it wins on desktop: the menu button only
+   exists on phones. */
 .menuButton {
   display: none;
 }
@@ -115,41 +143,153 @@
   }
 }
 
-/* ----- Small screens: menu button and a panel below the bar ----- */
+/* ----- Phones: logo, menu button and a full-screen menu ----- */
 
 @media (max-width: 40em) {
+  .header {
+    /* The open menu has the opposite colours of the page: black with white
+       text in light mode, white with black text in dark mode. The theme
+       switch in it wears the matching set of colours. */
+    --menu-bg: #111111;
+    --menu-text: #ffffff;
+    --menu-border: rgb(255 255 255 / 0.14);
+    --menu-toggle-track: #1f2026;
+    --menu-toggle-border: #393a41;
+    --menu-toggle-knob: #000000;
+    --menu-toggle-knob-border: transparent;
+    --menu-toggle-knob-shadow: none;
+    --menu-toggle-icon: #ffffff;
+
+    justify-content: space-between;
+  }
+
+  :global(:root[data-theme='dark']) .header {
+    --menu-bg: #ffffff;
+    --menu-text: #111111;
+    --menu-border: rgb(0 0 0 / 0.1);
+    --menu-toggle-track: #f1f2f4;
+    --menu-toggle-border: #e2e3e7;
+    --menu-toggle-knob: #ffffff;
+    --menu-toggle-knob-border: #e2e3e7;
+    --menu-toggle-knob-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+    --menu-toggle-icon: #3f3f46;
+  }
+
+  /* Both stay above the open menu, so they keep their place and only change
+     colour. */
+  .logo,
   .menuButton {
+    position: relative;
+    z-index: 51;
     display: inline-flex;
-    /* Align the glyph with the page edge, like the icons on desktop. */
-    margin-right: calc((1.2rem - var(--nav-item-size)) / 2);
+    align-items: center;
+    color: var(--color-text);
+    transition: color 0.2s ease;
+  }
+
+  .logo {
+    margin-right: 0;
+  }
+
+  .menuButton {
+    --icon-size: 1.5rem;
+
+    /* Line the ends of the strokes up with the page edge. */
+    margin-right: calc((var(--icon-size) - var(--nav-item-size)) / 2 - 0.1875rem);
+  }
+
+  .header[data-open] .logo,
+  .header[data-open] .menuButton {
+    color: var(--menu-text);
+  }
+
+  .header[data-open] :focus-visible {
+    outline-color: var(--menu-text);
   }
 
   .menu {
     display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    left: 0;
-    z-index: 20;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 0.5rem var(--gutter) 1.5rem;
-    background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    padding-top: var(--nav-height);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    color: var(--menu-text);
+    background: var(--menu-bg);
+    /* Switching the theme with the menu open flips its colours smoothly. */
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
   }
 
   .open {
     display: flex;
+    animation: menu-in 0.25s ease;
   }
 
   .nav {
     flex-direction: column;
     gap: 0;
+    padding: 1rem var(--gutter);
   }
 
+  /* Centred, and each link fills its row, so it is easy to reach with
+     either thumb. */
   .link {
-    min-height: 3rem;
-    font-size: 1.25rem;
+    display: flex;
+    justify-content: center;
+    min-height: 3.5rem;
+    font-size: 1.125rem;
+    color: inherit;
+  }
+
+  /* Contact icons centred at the bottom, below a line. */
+  /* Theme switch centred near the bottom, above the contact icons, in the
+     colours that suit the menu (see .header above). */
+  .theme {
+    --toggle-track: var(--menu-toggle-track);
+    --toggle-border: var(--menu-toggle-border);
+    --toggle-knob: var(--menu-toggle-knob);
+    --toggle-knob-border: var(--menu-toggle-knob-border);
+    --toggle-knob-shadow: var(--menu-toggle-knob-shadow);
+    --toggle-icon: var(--menu-toggle-icon);
+
+    margin: auto auto 2rem;
+  }
+
+  .contact {
+    --icon-size: 1.5rem;
+    --icon-box: var(--nav-item-size);
+
+    justify-content: center;
+    margin: 0;
+    padding: 3rem var(--gutter) calc(3rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--menu-border);
+  }
+
+  .contact .iconLink {
+    color: inherit;
+    transition: opacity 0.2s ease;
+  }
+
+  .cvLabel {
+    display: none;
+  }
+}
+
+@media (max-width: 40em) and (hover: hover) {
+  .contact .iconLink:hover {
+    opacity: 0.7;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
   }
 }

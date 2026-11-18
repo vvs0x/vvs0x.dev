@@ -7,54 +7,53 @@
   padding: 0 var(--frame-inset) var(--frame-inset);
 }
 
+/*
+ * The outer columns are 3/10 of the width and the middle one 4/10, so a
+ * featured card (two columns) is 7/10 and a small card 3/10 wide. The small
+ * cards are cut to their screenshots, and two of them stacked are about as
+ * tall as the featured card with its screenshot at full width. Rows follow
+ * that content.
+ */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: minmax(var(--grid-row), auto);
+  grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 3fr);
   grid-auto-flow: dense;
   background: var(--color-bg);
 }
 
 /*
- * Placement rules are wrapped in :where() so they all share the specificity
- * of a single class and the small-screen reset at the bottom wins by order.
+ * In every group of three cards, one spans two columns and two rows,
+ * alternating between the left and the right side. Placement rules are
+ * wrapped in :where() so they all share the specificity of a single class
+ * and the small-screen reset at the bottom wins by order.
  */
-
-/* Per-card column spans (Playground). */
-.grid > :where([data-span='2']) {
-  grid-column: span 2;
-}
-
-.grid > :where([data-span='3']) {
-  grid-column: span 3;
-}
-
-/* Featured pattern (Projects). */
-.featured > :where(:nth-child(6n + 1)) {
+.grid > :where(:nth-child(6n + 1)) {
   grid-column: 1 / 3;
 }
 
-.featured > :where(:nth-child(6n + 4)) {
+.grid > :where(:nth-child(6n + 4)) {
   grid-column: 2 / 4;
 }
 
-.featured > :where(:nth-child(6n + 2), :nth-child(6n + 3)) {
+.grid > :where(:nth-child(6n + 2), :nth-child(6n + 3)) {
   grid-column: 3 / 4;
 }
 
-.featured > :where(:nth-child(6n + 5), :nth-child(6n + 6)) {
+.grid > :where(:nth-child(6n + 5), :nth-child(6n + 6)) {
   grid-column: 1 / 2;
 }
 
-.featured > :where(:nth-child(6n + 1), :nth-child(6n + 4)) {
+.grid > :where(:nth-child(6n + 1), :nth-child(6n + 4)) {
   grid-row: span 2;
-  /* Read by the card: larger visual, more air and a larger title for featured entries. */
+  /* Read by the card: the visual fills the card, more air and a larger title. */
+  --card-visual-flex: 1 1 0;
   --card-visual-min: clamp(11rem, 45vw, 300px);
+  --card-swatch-ratio: auto;
   --card-padding-custom: clamp(1.75rem, 1rem + 2.5vw, 3.5rem);
   --card-title-size: clamp(1.4rem, 1rem + 1.2vw, 1.8rem);
 }
 
-/* Small screens: one column, natural order. */
+/* Small screens: one column, natural order; each card is as tall as its picture and text. */
 @media (max-width: 56.24em) {
   .grid {
     grid-template-columns: minmax(0, 1fr);
@@ -66,13 +65,10 @@
   }
 }
 
-/* No page frame below this width, so the grid draws its own left edge again. */
+/* Phones: no page frame and no side lines (see Card.module.css); the cards
+   are divided only by the lines between them. */
 @media (max-width: 40em) {
   .section {
     padding: 0 var(--gutter) var(--gutter);
-  }
-
-  .grid {
-    border-left: 1px solid var(--color-border);
   }
 }

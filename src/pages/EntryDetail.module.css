@@ -4,6 +4,18 @@
  * view while the text on the right scrolls.
  */
 
+/*
+ * At least one screen below the navbar. The two-column part takes the rest,
+ * so the line between menu and text always reaches the bottom of the window,
+ * even when the text is short and the monitor is tall.
+ */
+.article {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--nav-height));
+  min-height: calc(100dvh - var(--nav-height));
+}
+
 /* ----- Header ----- */
 
 .header {
@@ -66,6 +78,7 @@
   --column-padding-top: clamp(2rem, 5vw, 4rem);
 
   position: relative;
+  flex: 1 0 auto;
   display: grid;
   grid-template-columns: minmax(14rem, 23%) minmax(0, 1fr);
 }
@@ -161,13 +174,23 @@
 }
 
 .section p {
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
   color: var(--color-text-muted);
 }
 
 .section p + p {
-  margin-top: 1.5rem;
+  margin-top: var(--gap-body);
+}
+
+/* List after the paragraphs, in the same text style, with "+" as in Markdown. */
+.list {
+  margin-top: var(--gap-body);
+  padding-left: 1.25em;
+  list-style: '+  ';
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
 }
 
 /* ----- Links ----- */
@@ -188,16 +211,17 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.3em;
+  color: var(--color-text-muted);
   transition: color 0.2s ease;
 }
 
 @media (hover: hover) {
   .links a:hover {
-    color: var(--color-text-muted);
+    color: var(--color-text);
   }
 }
 
-/* ----- Small screens: image below the title, menu as a row above the text ----- */
+/* ----- Small screens: image below the title, no side menu ----- */
 
 @media (max-width: 56.24em) {
   .withImage {
@@ -212,47 +236,12 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  /* Its white background would cover the frame rules, so it ends at them. */
+  /* One column has no room for the menu; the text simply runs from top to bottom. */
   .sidebar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    margin-inline: var(--rule-inset);
-    background: var(--color-bg);
-    border-right: 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .toc {
-    position: static;
-    max-height: none;
-    padding: 0 calc(var(--gutter) - var(--rule-inset));
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-  }
-
-  .tocList {
-    flex-direction: row;
-    gap: 1.5rem;
-  }
-
-  .tocLink {
-    padding-block: 0.85rem;
-    font-size: 1rem;
-    white-space: nowrap;
-  }
-
-  .marker {
     display: none;
   }
 
   .content {
     padding: 2rem var(--gutter) 4rem;
-  }
-
-  /* Leave room for the sticky menu row when jumping to a heading. */
-  .section {
-    scroll-margin-top: 4.5rem;
   }
 }

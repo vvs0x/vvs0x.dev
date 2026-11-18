@@ -12,7 +12,7 @@ export function isIsoDate(value: string): boolean {
   return ISO_DATE.test(value);
 }
 
-/** Formats an ISO date as e.g. "Jul 10, 2026"; any other value is shown as is. */
+/** Formats an ISO date as e.g. "Jul 10, 2026". Check with isIsoDate first. */
 export function formatDate(value: string): string {
-  return isIsoDate(value) ? formatter.format(new Date(value)) : value;
+  return formatter.format(new Date(value));
 }

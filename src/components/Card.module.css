@@ -1,7 +1,9 @@
 /*
  * Shared card shell and meta block for Projects and Playground.
  * The grid can tune a card through these custom properties:
+ *   --card-visual-flex    flex of the image / swatch; set to fill the card (featured)
  *   --card-visual-min     minimum height of the image / swatch area
+ *   --card-swatch-ratio   shape of the placeholder swatch (default 16:10)
  *   --card-padding-custom air around image / swatch and text (overrides the default)
  *   --card-title-size     font size of the title
  *   --card-image-inset    side gap of a centred image; the text is indented by it
@@ -49,16 +51,32 @@
   overflow: hidden;
 }
 
+/*
+ * By default the picture keeps its own proportions at full card width, so
+ * the card is cut to the screenshot; a placeholder swatch takes the same
+ * 16:10 shape. A featured card instead fills its box and centres the
+ * picture in it: the grid sets --card-visual-flex and friends for that.
+ */
 .image,
 .swatch {
-  flex: 1 1 0;
+  flex: var(--card-visual-flex, none);
   width: 100%;
-  min-height: var(--card-visual-min, 120px);
+  min-height: var(--card-visual-min, 0);
 }
 
-/* Show the whole image, centred, instead of cropping it. */
+/* Show the whole image instead of cropping it. */
 .image {
+  height: auto;
   object-fit: contain;
+}
+
+.swatch {
+  aspect-ratio: var(--card-swatch-ratio, 16 / 10);
+}
+
+/* Dark mode: the dark grey swatches would melt into the page; lift them a little. */
+:global(:root[data-theme='dark']) .swatch {
+  filter: brightness(1.6);
 }
 
 /* ----- Meta block ----- */
@@ -98,4 +116,24 @@
   line-height: 1.25;
   letter-spacing: -0.02em;
   color: var(--color-text);
+}
+
+/* One column: featured cards, too, are cut to their picture. */
+@media (max-width: 56.24em) {
+  .image,
+  .swatch {
+    flex: none;
+    min-height: 0;
+  }
+
+  .swatch {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* Phones: no vertical lines, only the line below each card. */
+@media (max-width: 40em) {
+  .card {
+    border-right: 0;
+  }
 }

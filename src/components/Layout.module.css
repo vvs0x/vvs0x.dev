@@ -1,8 +1,13 @@
+/* At most --page-max wide and centred, so large monitors get white space
+   beside the page instead of a stretched layout. */
 .shell {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: var(--page-max);
   min-height: 100vh;
   min-height: 100dvh;
+  margin-inline: auto;
 }
 
 .main {

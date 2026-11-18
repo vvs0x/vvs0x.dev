@@ -8,24 +8,29 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'APK Protocol';
-  src: url('/fonts/APKProtocol-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ---------- Design tokens ---------- */
 
 :root {
   --color-bg: #ffffff;
   --color-text: #111111;
   --color-text-muted: #666666;
+  /* Navbar contact icons. #8a8a8a gives the softer grey of viteplus.dev. */
+  --color-icon: var(--color-text-muted);
   --color-border: #eaeaea;
-  /* Card hover. Must stay lighter than --color-border, otherwise the grid
-     lines vanish into the hovered card. */
+  /* Card hover. Must stay lighter than --color-border (darker in dark mode),
+     otherwise the grid lines vanish into the hovered card. */
   --color-surface-hover: #f4f4f4;
+  /* Contour lines on the start page (lossSurface.ts); every fifth line is
+     an index line, drawn a little darker. */
+  --color-contour: #cdcdcd;
+  --color-contour-index: #a8a8a8;
+  /* Light / dark switch in the navbar. */
+  --toggle-track: #f1f2f4;
+  --toggle-border: #e2e3e7;
+  --toggle-knob: #ffffff;
+  --toggle-knob-border: #e2e3e7;
+  --toggle-knob-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+  --toggle-icon: #3f3f46;
 
   --font-sans: 'APK Protocol', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
     sans-serif;
@@ -35,20 +40,24 @@
      the navbar: 16px on small phones, ~3.5vw on desktop. */
   --gutter: clamp(1rem, 3.5vw, 3.25rem);
   /* Navbar: vertical padding, height of links and icon boxes, and the total
-     including its 1px bottom line. */
-  --nav-padding-block: clamp(0.75rem, 1.75vw, 1.5625rem);
+     including its 1px bottom line: 81px at every width, like vite.dev. */
+  --nav-padding-block: 1.25rem;
   --nav-item-size: 40px;
   --nav-height: calc(2 * var(--nav-padding-block) + var(--nav-item-size) + 1px);
-  /* Row height of the Projects and Playground grids. Both grids read this,
-     so two rows always add up to the same container height. Capped so that
-     navbar, two rows and the bottom inset fill exactly one viewport, which
-     leaves those pages with nothing below the fold. */
-  --grid-row: min(23rem, calc((100vh - var(--nav-height) - var(--frame-inset)) / 2));
   /* Width of text columns (650px). */
   --measure: 40.625rem;
-  /* Vertical page-frame rules, measured from the viewport edge. Half the
-     gutter, so frame and content keep the same distance at every width. */
-  --frame-inset: calc(var(--gutter) / 2);
+  /* Running text on the detail pages and the About page: one size for both. */
+  --text-body: 1.1rem;
+  --leading-body: 1.6;
+  --gap-body: 1.5rem;
+  /* The page never gets wider than the MacBook screen it is designed on
+     (1512px). On larger monitors it sits in the middle, with white space on
+     both sides; the frame rules move in with it. */
+  --page-max: 94.5rem;
+  /* Vertical page-frame rules, measured from the edge of the page: 16px. On
+     narrow windows (below ~915px) half the gutter, so the content never gets
+     closer to the frame than to the window edge. */
+  --frame-inset: min(1rem, var(--gutter) / 2);
   /* The frame is the outer boundary of the page: a rule that runs across it
      stops at the two vertical lines instead of carrying on to the viewport
      edge. Zero below 40em, where there is no frame to stop at. */
@@ -57,16 +66,34 @@
   color-scheme: light;
 }
 
+/* Dark mode, switched in the navbar. index.html picks the first theme
+   (saved choice, else the system setting) before the page renders. */
+:root[data-theme='dark'] {
+  --color-bg: #16171c; /* rgb(22, 23, 28) */
+  --color-text: #ededef;
+  --color-text-muted: #9a9ba3;
+  --color-border: #2b2c33;
+  --color-surface-hover: #1d1e24;
+  --color-contour: #2e2f37;
+  --color-contour-index: #464855;
+  --toggle-track: #1f2026;
+  --toggle-border: #393a41;
+  --toggle-knob: #000000;
+  --toggle-knob-border: transparent;
+  --toggle-knob-shadow: none;
+  --toggle-icon: #ffffff;
+
+  color-scheme: dark;
+}
+
 /* ---------- Breakpoints ----------
    CSS has no variables in media queries, so the thresholds are repeated
    where they are used. Keep them in sync with this list:
-     40em    (640px)  navbar collapses into a menu button, smaller grid rows
-     48em    (768px)  hero headline gets its forced line break
+     40em    (640px)  navbar collapses into logo and menu button, no page frame
      56.24em (900px)  grids switch between one and three columns */
 
 @media (max-width: 40em) {
   :root {
-    --grid-row: 18rem;
     --rule-inset: 0px;
   }
 }
@@ -162,12 +189,14 @@ body::after {
   pointer-events: none;
 }
 
+/* Measured from the edge of the centred page, not of the window. 50% is
+   half the viewport, as the lines are fixed. */
 body::before {
-  left: var(--frame-inset);
+  left: max(var(--frame-inset), 50% - var(--page-max) / 2 + var(--frame-inset));
 }
 
 body::after {
-  right: var(--frame-inset);
+  right: max(var(--frame-inset), 50% - var(--page-max) / 2 + var(--frame-inset));
 }
 
 @media (max-width: 40em) {

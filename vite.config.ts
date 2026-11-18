@@ -24,4 +24,9 @@ function spaFallback(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), spaFallback()],
+  build: {
+    // three.js alone is about 560 kB. It is split off and only loaded on
+    // the start page (src/components/hero), so the warning doesn't apply.
+    chunkSizeWarningLimit: 600,
+  },
 });

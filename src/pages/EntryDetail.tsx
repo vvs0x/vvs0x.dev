@@ -4,6 +4,7 @@ import type { Entry } from '../types';
 import { projects } from '../data/projects';
 import { playground } from '../data/playground';
 import { formatDate, isIsoDate } from '../utils/formatDate';
+import { pageTitle } from '../utils/pageTitle';
 import { slugify } from '../utils/slugify';
 import { useActiveSection } from '../hooks/useActiveSection';
 import NotFound from './NotFound';
@@ -62,8 +63,8 @@ export default function EntryDetail({ collection }: { collection: Collection }) 
   }
 
   return (
-    <article>
-      <title>{`${entry.title} – vvs0x.dev`}</title>
+    <article className={styles.article}>
+      <title>{pageTitle(entry.title)}</title>
 
       <header className={entry.image ? `${styles.header} ${styles.withImage}` : styles.header}>
         <div className={styles.intro}>
@@ -130,6 +131,13 @@ export default function EntryDetail({ collection }: { collection: Collection }) 
               {section.paragraphs.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
+              {section.list && section.list.length > 0 && (
+                <ul className={styles.list}>
+                  {section.list.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              )}
             </section>
           ))}
 

@@ -1,15 +1,16 @@
 import CardGrid from '../components/CardGrid';
-import ProjectCard from '../components/ProjectCard';
+import EntryCard from '../components/EntryCard';
 import { projects } from '../data/projects';
+import { pageTitle } from '../utils/pageTitle';
 
 export default function Projects() {
   return (
     <>
-      <title>Projects – vvs0x.dev</title>
+      <title>{pageTitle('Projects')}</title>
       <h1 className="visually-hidden">Projects</h1>
-      <CardGrid pattern="featured">
+      <CardGrid>
         {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <EntryCard key={project.id} entry={project} basePath="/projects" />
         ))}
       </CardGrid>
     </>

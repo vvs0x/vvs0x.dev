@@ -16,11 +16,13 @@ npm run preview  # serve the production build locally
 
 All content lives in `src/data/`:
 
-- `site.ts` holds name, email, social links and the CV path used by navbar and footer.
+- `site.ts` holds email, social links and the CV path used by the navbar.
 - `projects.ts` feeds the Projects grid and `/projects/<id>`.
 - `playground.ts` feeds the Playground grid and `/playground/<id>`.
 
-An entry with a `body` and a `date` gets a detail page and its card becomes a link. The `body` is a list of sections, each with a `heading` and its `paragraphs`; the headings form the side menu of the detail page. An entry without a body is a placeholder: its card is not clickable and shows "Coming soon" instead of the date. Optional fields: `image` (put the file in `public/images/`), `color` (swatch when there is no image), `links` (shown below the body).
+The start page (`/`) shows a loss surface, a three.js scene in `src/components/hero/lossSurface.ts` where a point runs gradient descent; its settings sit at the top of that file. The About page lives at `/about`.
+
+An entry with a `body` gets a detail page and its card becomes a link. The `body` is a list of sections, each with a `heading` and its `paragraphs`; the headings form the side menu of the detail page. An entry without a body is a placeholder: its card is not clickable. Optional fields: `image` (put the file in `public/images/`, sizes in `CLAUDE.md`), `color` (swatch when there is no image), `links` (shown below the body).
 
 Dates are ISO strings (`YYYY-MM-DD`) and are formatted at render time. The `id` is the URL slug.
 

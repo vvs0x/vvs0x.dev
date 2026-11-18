@@ -3,18 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>vvs0x.dev</title>
+    <title>vvs0x</title>
     <meta
       name="description"
-      content="Valentín Schwarz. Former carpenter, now a data science student. Projects, experiments and notes."
+      content="Valentín Schwarz. Former carpenter, now studying Data Science. Projects and experiments."
     />
     <meta name="theme-color" content="#ffffff" />
+    <!-- Theme before the first paint: the saved choice, else the system setting.
+         The switch in the navbar (src/theme.ts) changes it later. -->
+    <script>
+      (function () {
+        var theme = null;
+        try {
+          theme = localStorage.getItem('theme');
+        } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+        if (theme === 'dark') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#16171c');
+        }
+      })();
+    </script>
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="vvs0x.dev" />
     <meta property="og:title" content="vvs0x.dev" />
     <meta
       property="og:description"
-      content="Former carpenter, now a data science student. Different tools, same instinct: build things properly, or don't build them at all."
+      content="Valentín Schwarz. Former carpenter, now studying Data Science. Projects and experiments."
     />
     <meta property="og:url" content="https://vvs0x.dev/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

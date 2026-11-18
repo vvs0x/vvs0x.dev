@@ -14,12 +14,14 @@ export interface EntryLink {
 export interface EntrySection {
   heading: string;
   paragraphs: string[];
+  /** Optional bullet list, shown after the paragraphs. */
+  list?: string[];
 }
 
 /**
  * Shared shape of everything that appears as a card.
  * Entries with a `body` get a detail page; entries without one are
- * placeholders: their cards are not clickable and show "Coming soon".
+ * placeholders: their cards are not clickable.
  */
 export interface Entry {
   /** URL slug, e.g. "automated-portfolio-pipeline". */
@@ -40,9 +42,4 @@ export interface Entry {
 
 export type Project = Entry;
 
-export interface PlaygroundItem extends Entry {
-  type: 'experiment' | 'thought';
-  excerpt?: string;
-  /** How many grid columns the card spans on desktop. */
-  colSpan?: 1 | 2 | 3;
-}
+export type PlaygroundItem = Entry;
