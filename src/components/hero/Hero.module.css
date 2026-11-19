@@ -69,12 +69,14 @@
   text-wrap: balance;
 }
 
+/* Always one line. On narrow phones the size shrinks until the sentence fits
+   between the gutters: 21 is its length in em (20.8 in APK Protocol), so
+   update it when the sentence changes. */
 .lede {
-  max-width: 30ch;
-  font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  font-size: min(clamp(1.05rem, 1.35vw, 1.3rem), (100vw - 2 * var(--gutter)) / 21);
   line-height: 1.45;
+  white-space: nowrap;
   color: var(--color-text-muted);
-  text-wrap: pretty;
 }
 
 /* What the surface shows, styled like the category labels on the cards. */

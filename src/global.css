@@ -175,8 +175,11 @@ h3 {
 
 /* ---------- Page frame ----------
    Two vertical rules just inside the viewport edges, running the full height
-   of every page. They sit outside all content, so nothing overlaps them.
-   Hidden on small screens, where there is no room for a frame. */
+   of every page. Content that runs up to the frame (the opaque start-page
+   surface) overlaps them by 1px, so they sit above it. Without the z-index
+   ::before would be painted under that content and ::after over it, and the
+   left rule would vanish. Hidden on small screens, where there is no room
+   for a frame. */
 
 body::before,
 body::after {
@@ -184,6 +187,7 @@ body::after {
   position: fixed;
   top: 0;
   bottom: 0;
+  z-index: 1;
   width: 1px;
   background: var(--color-border);
   pointer-events: none;
